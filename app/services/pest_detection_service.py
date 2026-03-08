@@ -8,7 +8,6 @@ import httpx
 import base64
 import logging
 from io import BytesIO
-from PIL import Image
 
 from app.config import settings
 from app.services.bedrock_service import BedrockService
@@ -188,19 +187,9 @@ class PestDetectionService:
             return None, None
 
     def _compress_image(self, image_bytes: bytes):
-        """Resize and compress image to reduce API costs."""
-        try:
-            img = Image.open(BytesIO(image_bytes)).convert("RGB")
-            # Resize if larger than 800x800
-            img.thumbnail((800, 800), Image.Resampling.LANCZOS)
-            buffer = BytesIO()
-            img.save(buffer, format="JPEG", quality=85, optimize=True)
-            compressed = buffer.getvalue()
-            logger.info(f"Image compressed: {len(image_bytes)} → {len(compressed)} bytes")
-            return compressed, "image/jpeg"
-        except Exception as e:
-            logger.warning(f"Compression failed, using original: {e}")
-            return image_bytes, "image/jpeg"
+        """Return image as-is — no Pillow dependency needed."""
+        logger.info(f"Image size: {len(image_bytes)} bytes")
+        return image_bytes, "image/jpeg"
 
     async def _try_upload_s3(self, image_bytes: bytes, crop: str):
         """Upload to S3 for audit - non-critical, silently skip if fails."""
