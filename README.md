@@ -1,6 +1,8 @@
 # 🌾 AgriSaarthi — AI Agricultural Assistant for Bharat
 
 > **WhatsApp-based AI chatbot empowering Indian farmers with crop advisory, pest detection, weather updates, mandi prices, and government scheme information — in 7 Indian languages.**
+>
+>  Deployed on: https://agrisaarthi-viii.onrender.com/
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com)
